@@ -1,0 +1,9 @@
+input/
+output/downscaled_data/
+output/rgb_images/
+
+__pycache__/
+*.pyc
+
+output.log
+output/patches.log
