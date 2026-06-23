@@ -2,7 +2,12 @@ import os
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
+import random
+from torch.utils.data import (
+    Dataset,
+    DataLoader,
+    random_split
+)
 
 
 class TIRDataset(Dataset):
@@ -48,6 +53,10 @@ class TIRDataset(Dataset):
 
         x = np.load(input_file).astype(np.float32) / 30000.0
         y = np.load(target_file).astype(np.float32) / 30000.0
+        if random.random() > 0.5:
+
+            x = np.flip(x, axis=2).copy()
+            y = np.flip(y, axis=2).copy()
 
         x = torch.tensor(x)
         y = torch.tensor(y)
@@ -92,10 +101,34 @@ class SimpleSR(nn.Module):
 
 dataset = TIRDataset("output/patches")
 
-dataloader = DataLoader(
+train_size = int(0.8 * len(dataset))
+test_size = len(dataset) - train_size
+
+
+generator = torch.Generator().manual_seed(42)
+
+train_dataset, test_dataset = random_split(
     dataset,
+    [train_size, test_size],
+    generator=generator
+)
+torch.save(
+    test_dataset.indices,
+    "test_indices.pth"
+)
+print("Train samples:", len(train_dataset))
+print("Test samples :", len(test_dataset))
+
+train_loader = DataLoader(
+    train_dataset,
     batch_size=4,
     shuffle=True
+)
+
+test_loader = DataLoader(
+    test_dataset,
+    batch_size=4,
+    shuffle=False
 )
 
 model = SimpleSR()
@@ -111,7 +144,7 @@ for epoch in range(10):
 
     total_loss = 0
 
-    for x, y in dataloader:
+    for x, y in train_loader:
 
         optimizer.zero_grad()
 
