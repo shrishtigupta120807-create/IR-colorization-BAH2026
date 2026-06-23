@@ -52,21 +52,26 @@ model.eval()
 
 
 input_img = np.load(
-    "output/patches/scene1/sample_000/tir_200m.npy"
+    "output/patches/scene19/sample_015/tir_200m.npy"
 ).astype(np.float32) / 30000.0
 
 target_img = np.load(
-    "output/patches/scene1/sample_000/tir_100m_512.npy"
+    "output/patches/scene19/sample_015/tir_100m_512.npy"
 ).astype(np.float32) / 30000.0
 
 
-x = torch.tensor(input_img).unsqueeze(0)
+x = torch.tensor(
+    input_img,
+    dtype=torch.float32
+).unsqueeze(0)
 
 with torch.no_grad():
+   
 
     prediction = model(x)
 
 prediction = prediction.squeeze().numpy()
+
 target = target_img.squeeze()
 
 

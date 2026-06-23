@@ -107,7 +107,7 @@ optimizer = torch.optim.Adam(
     lr=0.001
 )
 
-for epoch in range(3):
+for epoch in range(10):
 
     total_loss = 0
 
