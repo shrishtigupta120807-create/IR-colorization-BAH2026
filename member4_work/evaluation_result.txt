@@ -1,0 +1,13 @@
+Evaluation Results
+
+Predicted Image:
+member3_work/prediction.png
+
+Ground Truth Image:
+output/patches/demo/sample_006/rgb_100m_512.png
+
+PSNR: paste_your_value_here
+SSIM: paste_your_value_here
+
+Note:
+This is an initial evaluation test. Final evaluation should use matching predicted and ground truth image pairs.
