@@ -20,3 +20,11 @@ The evaluation script needs:
 
 - Predicted RGB image from Member 3
 - Ground truth RGB image from the dataset
+
+
+## How to Run Demo
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
