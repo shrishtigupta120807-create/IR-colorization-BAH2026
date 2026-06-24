@@ -14,6 +14,15 @@ st.write(
     "This demo shows the infrared input image, predicted RGB output, "
     "ground truth RGB image, and evaluation metrics."
 )
+uploaded_file = st.file_uploader(
+    "Upload a TIR image for preview",
+    type=["png", "jpg", "jpeg"]
+)
+
+if uploaded_file is not None:
+    st.subheader("Uploaded TIR Preview")
+    uploaded_image = Image.open(uploaded_file)
+    st.image(uploaded_image, use_container_width=True)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
