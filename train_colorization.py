@@ -11,20 +11,20 @@ dataset = ColorizationDataset()
 
 loader = DataLoader(
     dataset,
-    batch_size=1,
+    batch_size=4,
     shuffle=True
 )
 
 model = ColorizationUNet().to(device)
 
-criterion = nn.MSELoss()
+criterion = nn.L1Loss()
 
 optimizer = torch.optim.Adam(
     model.parameters(),
     lr=0.001
 )
 
-epochs = 20
+epochs = 10
 
 for epoch in range(epochs):
 
@@ -35,8 +35,9 @@ for epoch in range(epochs):
         tir = tir.float().to(device)
         rgb = rgb.float().to(device)
 
-        tir = tir / 27502.0
-        rgb = rgb / 11489.0
+        tir = tir / 56234.0
+
+        rgb = rgb /65454.0
 
         pred = model(tir)
 
